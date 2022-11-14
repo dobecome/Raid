@@ -16,9 +16,11 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  name String
   totalScore Int
-  // boards BossRaidRecord[]
-  @@map("users")
+  bossRaids BossRaid[]
+  bossRaidRecords BossRaidRecord[]
+  // @@map("users")
 }
 
 model BossRaid {
@@ -26,10 +28,11 @@ model BossRaid {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // enteredUserId Int
-  // users User @relation(fields: [enteredUserId], references: [id])
+  enteredUserId Int
+  user User @relation(fields: [enteredUserId], references: [id])
 
-  @@map("boss-raids")
+  bossRaidRecord BossRaidRecord[]
+  // @@map("boss-raids")
 }
 
 model BossRaidRecord {
@@ -37,10 +40,14 @@ model BossRaidRecord {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  // bossRaidId Int
-  // bossRaids BossRaid @relation((fields: [bossRaidId], references: [id]))
+  bossRaidId Int
+  bossRaid BossRaid @relation(fields: [bossRaidId], references: [id])
+
+  userId Int
+  user User @relation(fields: [userId], references: [id])
 
   level Int
   score Int
   isDone Boolean
+  // @@map("boss-raids-records")
 }
