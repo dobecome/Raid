@@ -6,11 +6,27 @@ https://mellow-deer-e21.notion.site/5-4a46473bd7e7468caa3a099311bcf8da
 ## 1. 프로젝트 목표
 - 보스레이드 PVE 컨텐츠 백엔드 서비스 개발
 - 기능
-  유저 생성/조회
-  보스 레이드 상태 조회 : 입장 가능 상태 확인 등
-  보스 레이드 시작 : 레이드 record 생성, 레이드 제한 시간(웹 JSON 파일 읽기)동안 레이드 점유
-  보스 레이드 종료 : 레이드 level(웹 JSON 파일 읽기)에 따른 score 반영(Redis client로 userId-totalScore 저장), 레이드 제한 시간 이내에 처리되지 않을 경우 예외처리
-  랭킹 조회 : Redis 에 캐싱된 데이터로 랭킹 조회
+1) 유저 생성/조회
+
+2) 보스 레이드 상태 조회
+
+- 입장 가능 상태 확인 등
+
+3) 보스 레이드 시작
+
+- 레이드 record 생성
+
+- 레이드 제한 시간(웹 JSON 파일 읽기)동안 레이드 점유
+
+4) 보스 레이드 종료 
+
+- 레이드 level(웹 JSON 파일 읽기)에 따른 score 반영(Redis client로 userId-totalScore 저장)
+
+- 레이드 제한 시간 이내에 처리되지 않을 경우 예외처리
+
+5) 랭킹 조회
+
+- Redis 에 캐싱된 데이터로 랭킹 조회
 
 # 2. 백엔드 프로젝트 구성
 1) Server : Nestjs
