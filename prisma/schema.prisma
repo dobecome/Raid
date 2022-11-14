@@ -28,8 +28,10 @@ model BossRaid {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  enteredUserId Int
-  user User @relation(fields: [enteredUserId], references: [id])
+  enteredUserId Int?
+  user User? @relation(fields: [enteredUserId], references: [id])
+
+  canEnter Boolean
 
   bossRaidRecord BossRaidRecord[]
   // @@map("boss-raids")

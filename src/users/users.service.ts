@@ -18,36 +18,28 @@ export class UsersService {
     return user.id;
   }
 
-  findAll() {
-    return GlobalService.bossRaidData;
-  }
-
   async findOne(id: number) {
     const user = await this.prisma.user.findFirst({
-      // select:{
-      //   totalScore,
-      //   bossRaidRecords,
-      // },
-      where:{
-        id
-      }
-    })
-    console.log(user)
-    // 
-    // if(user){
-    //   delete user.id;
-    //   delete user.name;
-    //   delete user.createdAt;
-    //   delete user.updatedAt;
-    // }
+      select: {
+        totalScore: true,
+        bossRaidRecords: true,
+      },
+      where: {
+        id,
+      },
+    });
     return user;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
+  // findAll() {
+  //   return '';
+  // }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
-  }
+  // update(id: number, updateUserDto: UpdateUserDto) {
+  //   return `This action updates a #${id} user`;
+  // }
+
+  // remove(id: number) {
+  //   return `This action removes a #${id} user`;
+  // }
 }

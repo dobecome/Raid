@@ -1,1 +1,4 @@
-export class CreateBossRaidDto {}
+export class CreateBossRaidDto {
+    entereduserId: number;
+    canEnter: boolean;
+}
