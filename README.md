@@ -1,5 +1,9 @@
 # Raid
-## 프로젝트 목표
+
+## 개발 Notion Link
+https://mellow-deer-e21.notion.site/5-4a46473bd7e7468caa3a099311bcf8da
+
+## 1. 프로젝트 목표
 - 보스레이드 PVE 컨텐츠 백엔드 서비스 개발
 - 기능
 1) 유저 생성/조회
@@ -14,8 +18,14 @@
 5) 랭킹 조회
 - Redis 에 캐싱된 데이터로 랭킹 조회
 
+# 2. 백엔드 프로젝트 구성
+1) Server : Nestjs
+2) DB : PostgreSQL (Docker)
+3) ORM : Prisma
+4) Key-Value cache storage : Redis (Docker)
 
-## API 명세
+
+## 3. API 명세
 | --- | --- | --- | --- | --- | --- |
 | INDEX | METHOD | URI | DESCRIPTION | RESPONSE | REMARK |
 | 1 | POST | /api/user | 유저 생성 | userId: string | O |
@@ -25,7 +35,7 @@
 | 5 | POST | /api/bossRaid/end | 보스레이드 종료, 종료 결과 Redis에 캐싱 |  |  |
 | 6 | GET | /api/bossRaid/topRankerList | 랭킹 조회 | User - totalScore 내림차순 |  |
 
-## ERD 설계 
+## 4. ERD 설계 
 | User |  |  |
 | --- | --- | --- |
 | Column | Type | REMARK |
@@ -51,3 +61,5 @@
 | level | Int |  |
 | score | Int |  |
 | isDone | boolean | 종료 시 true |
+
+## 미비 사항 및 추후 적용 예정 사항
