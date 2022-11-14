@@ -36,9 +36,8 @@ https://mellow-deer-e21.notion.site/5-4a46473bd7e7468caa3a099311bcf8da
 
 
 ## 3. API 명세
-| API 명세 |  |  |  |  |  |
-| --- | --- | --- | --- | --- | --- |
 | INDEX | METHOD | URI | DESCRIPTION | RESPONSE | REMARK |
+| --- | --- | --- | --- | --- | --- |
 | 1 | POST | /api/user | 유저 생성 | userId: string | O |
 | 2 | GET | /api/user | 유저 조회 | totalScore: Int, bossRaidRecord: [] | O |
 | 3 | GET | /api/bossRaid | 보스레이드 상태 조회 | canEnter:boolean, enteredUserId:string | O |
