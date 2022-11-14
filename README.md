@@ -32,7 +32,7 @@ https://mellow-deer-e21.notion.site/5-4a46473bd7e7468caa3a099311bcf8da
 1) Server : Nestjs
 2) DB : PostgreSQL (Docker)
 3) ORM : Prisma
-4) Key-Value cache storage : Redis (Docker)
+4) In-memory data structure store : Redis (Docker)
 
 
 ## 3. API 명세
