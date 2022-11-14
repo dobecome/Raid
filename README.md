@@ -36,6 +36,7 @@ https://mellow-deer-e21.notion.site/5-4a46473bd7e7468caa3a099311bcf8da
 
 
 ## 3. API 명세
+| API 명세 |  |  |  |  |  |
 | --- | --- | --- | --- | --- | --- |
 | INDEX | METHOD | URI | DESCRIPTION | RESPONSE | REMARK |
 | 1 | POST | /api/user | 유저 생성 | userId: string | O |
