@@ -41,9 +41,9 @@ https://mellow-deer-e21.notion.site/5-4a46473bd7e7468caa3a099311bcf8da
 | 1 | POST | /api/user | 유저 생성 | userId: string | O |
 | 2 | GET | /api/user | 유저 조회 | totalScore: Int, bossRaidRecord: [] | O |
 | 3 | GET | /api/bossRaid | 보스레이드 상태 조회 | canEnter:boolean, enteredUserId:string | O |
-| 4 | POST | /api/bossRaid/enter | 보스레이드 시작 | 시작 가능= RaidRecordId + isEntered true, 시작 불가능= isEntered false | 개발중 |
-| 5 | POST | /api/bossRaid/end | 보스레이드 종료, 종료 결과 Redis에 캐싱 |  |  |
-| 6 | GET | /api/bossRaid/topRankerList | 랭킹 조회 | User - totalScore 내림차순 |  |
+| 4 | POST | /api/bossRaid/enter | 보스레이드 시작 | 시작 가능= RaidRecordId + isEntered true, 시작 불가능= isEntered false | O |
+| 5 | POST | /api/bossRaid/end | 보스레이드 종료, 종료 결과 Redis에 캐싱 |  | O |
+| 6 | GET | /api/bossRaid/topRankerList | 랭킹 조회 | User - totalScore 내림차순 | O |
 
 ## 4. ERD 설계 
 | User |  |  |
@@ -73,3 +73,5 @@ https://mellow-deer-e21.notion.site/5-4a46473bd7e7468caa3a099311bcf8da
 | isDone | boolean | 종료 시 true |
 
 ## 미비 사항 및 추후 적용 예정 사항
+1) 기능 개발 완료 (Request 및 Response 요구 사항 충족, Redis 사용하여 랭킹 조회 기능 구현, staticData 웹서버 캐싱 등)
+2) Unit Test 코드 작성 예정
