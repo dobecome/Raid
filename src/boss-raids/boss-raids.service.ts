@@ -1,9 +1,6 @@
 import { Injectable } from "@nestjs/common";
-import e from "express";
 import { GlobalService } from "src/app.module";
 import { PrismaService } from "src/prisma/prisma.service";
-import { CreateBossRaidDto } from "./dto/create-boss-raid.dto";
-import { UpdateBossRaidDto } from "./dto/update-boss-raid.dto";
 
 @Injectable()
 export class BossRaidsService {
@@ -129,6 +126,7 @@ export class BossRaidsService {
     const bossRaidLimitSeconds = BOSS_RAID_DATA.bossRaidLimitSeconds;
     let lastSeconds = Date.now() - bossRaidLimitSeconds * 1000;
     let date = new Date(lastSeconds).toISOString(); // 현재 시점 기준 180초 이전의 Date
+    // 
     const bossRaid = await this.prisma.bossRaidRecord.updateMany({
       data: {
         isDone: true,
@@ -143,34 +141,42 @@ export class BossRaidsService {
       },
     });
 
-    const score = await this.prisma.user.findFirst({
-      select: {
-        totalScore: true,
-      },
-      where: {
-        id: body.userId,
-      },
-    });
-
-    const scoreByLevel = await this.prisma.bossRaidRecord.findFirst({
-      select: {
-        score: true,
-      },
-      where: {
-        id: +body.raidRecordId,
-      },
-    });
-
     if (bossRaid.count > 0) {
+      // 유저 현재 점수 + 보스레이드 종료 점수 구하기
+      const score = await this.prisma.user.findFirst({
+        select: {
+          totalScore: true,
+        },
+        where: {
+          id: +body.userId,
+        },
+      });
+      const scoreByLevel = await this.prisma.bossRaidRecord.findFirst({
+        select: {
+          score: true,
+        },
+        where: {
+          id: +body.raidRecordId,
+        },
+      });
+
+      // 합산 점수 저장
       await this.prisma.user.update({
         data: {
           totalScore: score.totalScore + scoreByLevel.score,
         },
         where: {
-          id: body.userId,
+          id: +body.userId,
         },
       });
 
+      // bossRaid 입장 가능상태로 변경
+      await this.prisma.bossRaid.updateMany({
+        data:{
+          canEnter:true
+        },
+      })
+      
       //redis client로 total score 저장시키는 로직 개발해야함
 
       return {};
