@@ -73,5 +73,5 @@ https://mellow-deer-e21.notion.site/5-4a46473bd7e7468caa3a099311bcf8da
 | isDone | boolean | 종료 시 true |
 
 ## 미비 사항 및 추후 적용 예정 사항
-기능 개발 완료
-Unit Test 코드 작성 예정
+1) 기능 개발 완료 (Request 및 Response 요구 사항 충족, Redis 사용하여 랭킹 조회 기능 구현, staticData 웹서버 캐싱 등)
+2) Unit Test 코드 작성 예정
