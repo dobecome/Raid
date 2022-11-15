@@ -14,7 +14,7 @@ export class RedisConfigService implements RedisOptionsFactory {
       config: {
         host: this.configService.get<string>('REDIS_HOSTNAME'),
         port: this.configService.get<number>('REDIS_PORT'),
-        password: this.configService.get<string>('REDIS_PASSWORD'),
+        // password: this.configService.get<string>('REDIS_PASSWORD'),
       },
     };
   }

@@ -4,14 +4,10 @@ import {
   Post,
   Body,
   Patch,
-  Param,
-  Delete,
 } from "@nestjs/common";
 import { BossRaidsService } from "./boss-raids.service";
-import { CreateBossRaidDto } from "./dto/create-boss-raid.dto";
-import { UpdateBossRaidDto } from "./dto/update-boss-raid.dto";
 
-@Controller("api/bossRaids")
+@Controller("api/bossRaid")
 export class BossRaidsController {
   constructor(private readonly bossRaidsService: BossRaidsService) {}
 
@@ -35,18 +31,8 @@ export class BossRaidsController {
     return this.bossRaidsService.patchEndBossRaid(body);
   }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.bossRaidsService.findOne(+id);
-  // }
-
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateBossRaidDto: UpdateBossRaidDto) {
-  //   return this.bossRaidsService.update(+id, updateBossRaidDto);
-  // }
-
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.bossRaidsService.remove(+id);
-  // }
+  @Get("topRankerList")
+  getTopRankerList(@Body() body: { userId: number;}) {
+    return this.bossRaidsService.getTopRankerList(body);
+  }
 }

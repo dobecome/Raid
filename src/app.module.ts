@@ -28,6 +28,7 @@ const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 })
 export class AppModule {
   constructor() {
+    // S3 Static Data 저장
     var xhr = new XMLHttpRequest();
     var target =
       "https://dmpilf5svl7rv.cloudfront.net/assignment/backend/bossRaidData.json";

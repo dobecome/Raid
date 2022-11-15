@@ -1,8 +1,6 @@
 import { Injectable } from "@nestjs/common";
-import { GlobalService } from "src/app.module";
 import { PrismaService } from "src/prisma/prisma.service";
 import { CreateUserDto } from "./dto/create-user.dto";
-import { UpdateUserDto } from "./dto/update-user.dto";
 
 @Injectable()
 export class UsersService {
@@ -30,16 +28,4 @@ export class UsersService {
     });
     return user;
   }
-
-  // findAll() {
-  //   return '';
-  // }
-
-  // update(id: number, updateUserDto: UpdateUserDto) {
-  //   return `This action updates a #${id} user`;
-  // }
-
-  // remove(id: number) {
-  //   return `This action removes a #${id} user`;
-  // }
 }
