@@ -42,7 +42,7 @@ https://mellow-deer-e21.notion.site/5-4a46473bd7e7468caa3a099311bcf8da
 | 2 | GET | /api/user | 유저 조회 | totalScore: Int, bossRaidRecord: [] | O |
 | 3 | GET | /api/bossRaid | 보스레이드 상태 조회 | canEnter:boolean, enteredUserId:string | O |
 | 4 | POST | /api/bossRaid/enter | 보스레이드 시작 | 시작 가능= RaidRecordId + isEntered true, 시작 불가능= isEntered false | O |
-| 5 | POST | /api/bossRaid/end | 보스레이드 종료, 종료 결과 Redis에 캐싱 |  | O |
+| 5 | PATCH | /api/bossRaid/end | 보스레이드 종료, 종료 결과 Redis에 캐싱 |  | O |
 | 6 | GET | /api/bossRaid/topRankerList | 랭킹 조회 | User - totalScore 내림차순 | O |
 
 ## 4. ERD 설계 
