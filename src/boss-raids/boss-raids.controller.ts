@@ -30,6 +30,11 @@ export class BossRaidsController {
     return this.bossRaidsService.postBeginBossRaid(body);
   }
 
+  @Patch("end")
+  patchEndBossRaid(@Body() body: { userId: number; raidRecordId: number }) {
+    return this.bossRaidsService.patchEndBossRaid(body);
+  }
+
   // @Get(':id')
   // findOne(@Param('id') id: string) {
   //   return this.bossRaidsService.findOne(+id);
