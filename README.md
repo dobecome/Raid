@@ -51,8 +51,8 @@ https://mellow-deer-e21.notion.site/5-4a46473bd7e7468caa3a099311bcf8da
 | Column | Type | REMARK |
 | id | Int |  |
 | totalScore | Int |  |
-| bossRaids | [] | FK (BossRaid - id) |
-| bossRaidRecord | [] | FK (BossRaidRecord - id) |
+| bossRaids | Array | FK (BossRaid - id) |
+| bossRaidRecord | Array | FK (BossRaidRecord - id) |
 
 | BossRaid |  |  |
 | --- | --- | --- |
@@ -60,7 +60,7 @@ https://mellow-deer-e21.notion.site/5-4a46473bd7e7468caa3a099311bcf8da
 | id | Int |  |
 | enteredUserId | Int | FK (User -id) |
 | canEnter | boolean |  |
-| bossRaidRecord | [] | FK (BossRaidRecord - id) |
+| bossRaidRecord | Array | FK (BossRaidRecord - id) |
 
 | BossRaidRecord |  |  |
 | --- | --- | --- |
