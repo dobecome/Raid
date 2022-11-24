@@ -59,8 +59,6 @@ export class BossRaidsService {
       )
         .then((res) => res.json())
         .then((json) => {
-          console.log("in json?");
-          console.log(json);
           this.redis.setex(
             "raidSettings",
             this.DEFAULT_EXPIRATION,
