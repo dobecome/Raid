@@ -1,14 +1,15 @@
 import { RedisService } from "@liaoliaots/nestjs-redis";
 import { Injectable } from "@nestjs/common";
 import Redis from "ioredis";
-import { GlobalService } from "src/app.module";
 import { PrismaService } from "src/prisma/prisma.service";
 import { RankingInfo } from "./entities/ranking-info.entity";
+import fetch from "node-fetch";
 
 @Injectable()
 export class BossRaidsService {
   private readonly redis: Redis;
   REDIS_RANKING_KEY = "ranking";
+  DEFAULT_EXPIRATION = "3600";
   constructor(
     private prisma: PrismaService,
     private readonly redisService: RedisService
@@ -35,6 +36,42 @@ export class BossRaidsService {
     return status;
   }
 
+  async getRaidSettingsFromRedis() {
+    let raidSettings;
+    let flag = false;
+    await this.redis.get("raidSettings", (err, settings) => {
+      if (err) console.error(err);
+
+      if (settings != null) {
+        // redis cache data 있을 시 리턴
+        // console.log("Cache Hit!");
+        raidSettings = JSON.parse(settings);
+      } else {
+        // redis cache data 없을 시 web url을 fetch 하여 redis 저장
+        // console.log("Cache Missed!");
+        flag = true;
+      }
+    });
+    if (flag) {
+      await fetch(
+        "https://dmpilf5svl7rv.cloudfront.net/assignment/backend/bossRaidData.json",
+        { method: "Get" }
+      )
+        .then((res) => res.json())
+        .then((json) => {
+          console.log("in json?");
+          console.log(json);
+          this.redis.setex(
+            "raidSettings",
+            this.DEFAULT_EXPIRATION,
+            JSON.stringify(json)
+          );
+          raidSettings = json;
+        });
+    }
+    return raidSettings;
+  }
+
   async checkBossRaidStatus() {
     const row = await this.prisma.bossRaidRecord.findMany({
       where: {
@@ -45,8 +82,10 @@ export class BossRaidsService {
     if (row.length > 0) {
       // 현재 진행중인 보스레이드가 있는 경우,
       // ex) 10분에 시작된 보스레이드는 13분 이후에는 삭제한다
-      const BOSS_RAID_DATA = Object.values(GlobalService.bossRaidData)[0][0];
-      const bossRaidLimitSeconds = BOSS_RAID_DATA.bossRaidLimitSeconds;
+      // app module에서 서버 구동 시 json데이터를 가져오지 않고, redis cache를 먼저 가져오도록 수정
+      const raidSettings = await this.getRaidSettingsFromRedis();
+      const bossRaidLimitSeconds =
+        raidSettings.bossRaids[0].bossRaidLimitSeconds;
       let lastSeconds = Date.now() - bossRaidLimitSeconds * 1000;
       let date = new Date(lastSeconds).toISOString(); // 현재 시점 기준 180초 이전의 Date
       const count = await this.prisma.bossRaidRecord.deleteMany({
@@ -97,9 +136,8 @@ export class BossRaidsService {
       });
 
       // 보스 레이드 시작 가능한 경우, S3 level/score 데이터 기반으로 bossRaidRecord 생성
-      const BOSS_RAID_DATA = Object.values(GlobalService.bossRaidData)[0][0];
-      // const bossRaidLimitSeconds = BOSS_RAID_DATA.bossRaidLimitSeconds;
-      const scoreByLevel = BOSS_RAID_DATA.levels.find(
+      const raidSettings = await this.getRaidSettingsFromRedis();
+      const scoreByLevel = raidSettings.bossRaids[0].levels.find(
         (e) => +e.level === +body.level
       ).score;
 
@@ -130,8 +168,8 @@ export class BossRaidsService {
 
   async patchEndBossRaid(body: { userId: number; raidRecordId: number }) {
     // 보스레이드 종료 조건 : 제한시간 3분이 지나지 않은 보스레이드만 종료시킬 수 있음
-    const BOSS_RAID_DATA = Object.values(GlobalService.bossRaidData)[0][0];
-    const bossRaidLimitSeconds = BOSS_RAID_DATA.bossRaidLimitSeconds;
+    const raidSettings = await this.getRaidSettingsFromRedis();
+    const bossRaidLimitSeconds = raidSettings.bossRaids[0].bossRaidLimitSeconds;
     let lastSeconds = Date.now() - bossRaidLimitSeconds * 1000;
     let date = new Date(lastSeconds).toISOString(); // 현재 시점 기준 180초 이전의 Date
     //
