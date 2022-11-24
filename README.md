@@ -1,7 +1,7 @@
-# Raid
+## Boss Raid 백엔드 서비스 개발
 
 ## 개발 Notion Link
-https://mellow-deer-e21.notion.site/5-4a46473bd7e7468caa3a099311bcf8da
+https://voracious-puffin-506.notion.site/5-daffd94126d94c55b2b657e21cfed68d
 
 ## 1. 프로젝트 목표
 - 보스레이드 PVE 컨텐츠 백엔드 서비스 개발
@@ -38,12 +38,12 @@ https://mellow-deer-e21.notion.site/5-4a46473bd7e7468caa3a099311bcf8da
 ## 3. API 명세
 | INDEX | METHOD | URI | DESCRIPTION | RESPONSE | REMARK |
 | --- | --- | --- | --- | --- | --- |
-| 1 | POST | /api/user | 유저 생성 | userId: string | O |
-| 2 | GET | /api/user | 유저 조회 | totalScore: Int, bossRaidRecord: [] | O |
-| 3 | GET | /api/bossRaid | 보스레이드 상태 조회 | canEnter:boolean, enteredUserId:string | O |
-| 4 | POST | /api/bossRaid/enter | 보스레이드 시작 | 시작 가능= RaidRecordId + isEntered true, 시작 불가능= isEntered false | O |
-| 5 | POST | /api/bossRaid/end | 보스레이드 종료, 종료 결과 Redis에 캐싱 |  | O |
-| 6 | GET | /api/bossRaid/topRankerList | 랭킹 조회 | User - totalScore 내림차순 | O |
+| 1 | POST | /api/user | 유저 생성 | { userId: number } | O |
+| 2 | GET | /api/user | 유저 조회 | { totalScore: number, bossRaidRecord: [] } | O |
+| 3 | GET | /api/bossRaid | 보스레이드 상태 조회 | { canEnter:boolean, enteredUserId: number } | O |
+| 4 | POST | /api/bossRaid/enter | 보스레이드 시작 | { raidRecordId: number, isEntered: boolean } or { isEntered: boolean } | O |
+| 5 | PATCH | /api/bossRaid/end | 보스레이드 종료, 종료 결과 Redis에 캐싱 | {} | O |
+| 6 | GET | /api/bossRaid/topRankerList | 랭킹 조회 | { topRankerInfoList: RankingInfo[], myRankingInfo: RankingInfo } | O |
 
 ## 4. ERD 설계 
 | User |  |  |
