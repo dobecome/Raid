@@ -52,6 +52,7 @@ export class BossRaidsService {
         flag = true;
       }
     });
+    // fetch await 처리는 redis get 밖에서 처리
     if (flag) {
       await fetch(
         "https://dmpilf5svl7rv.cloudfront.net/assignment/backend/bossRaidData.json",
@@ -59,6 +60,7 @@ export class BossRaidsService {
       )
         .then((res) => res.json())
         .then((json) => {
+          // redis expiration 설정 : 1시간 뒤 만료
           this.redis.setex(
             "raidSettings",
             this.DEFAULT_EXPIRATION,
